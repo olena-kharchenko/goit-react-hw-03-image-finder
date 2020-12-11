@@ -3,7 +3,6 @@ import { ToastContainer } from 'react-toastify';
 import Searchbar from './components/Searchbar';
 import ImagesInfo from './components/ImagesInfo';
 
-import Loader from './components/Loader';
 import Button from './components/Button';
 import Modal from './components/Modal';
 
@@ -26,7 +25,6 @@ class App extends Component {
 
         <ImagesInfo imageName={this.state.imageName} />
 
-        <Loader />
         <Button />
         <Modal />
       </>

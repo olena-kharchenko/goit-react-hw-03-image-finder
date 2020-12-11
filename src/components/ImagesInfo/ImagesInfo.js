@@ -1,5 +1,7 @@
 import { Component } from 'react';
+import imagesAPI from '../services/images-api';
 import ImagesErrorView from '../ImagesErrorView';
+import ImagePendingView from '../ImagePendingView';
 import ImageGallery from '../ImageGallery';
 
 class ImagesInfo extends Component {
@@ -15,18 +17,9 @@ class ImagesInfo extends Component {
 
     if (prevName !== nextName) {
       this.setState({ status: 'pending' });
-      fetch(
-        `https://pixabay.com/api/?q=${nextName}&page=1&key=18452046-d075d28130c097165687e8e16&image_type=photo&orientation=horizontal&per_page=12`,
-      )
-        .then(response => {
-          if (response.ok) {
-            return response.json();
-          }
 
-          return Promise.reject(
-            new Error('Sorry, something went wrong. Please try again later'),
-          );
-        })
+      imagesAPI
+        .fetchImages(nextName)
         .then(images => {
           if (images.total !== 0) {
             this.setState({ images, status: 'resolved' });
@@ -47,7 +40,7 @@ class ImagesInfo extends Component {
     }
 
     if (status === 'pending') {
-      return <p>Идет загрузка</p>;
+      return <ImagePendingView />;
     }
 
     if (status === 'rejected') {
