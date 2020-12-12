@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import ImageGalleryItem from '../ImageGalleryItem';
 
 function ImageGallery({ images }) {
@@ -7,11 +8,16 @@ function ImageGallery({ images }) {
         <ImageGalleryItem
           src={image.webformatURL}
           alt={image.tags}
+          largeImageUrl={image.largeImageURL}
           key={index}
         />
       ))}
     </ul>
   );
 }
+
+ImageGallery.propTypes = {
+  images: PropTypes.array.isRequired,
+};
 
 export default ImageGallery;

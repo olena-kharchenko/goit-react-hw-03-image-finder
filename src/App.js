@@ -3,9 +3,6 @@ import { ToastContainer } from 'react-toastify';
 import Searchbar from './components/Searchbar';
 import ImagesInfo from './components/ImagesInfo';
 
-import Button from './components/Button';
-import Modal from './components/Modal';
-
 class App extends Component {
   state = {
     imageName: '',
@@ -21,11 +18,9 @@ class App extends Component {
     return (
       <>
         <Searchbar onSubmit={this.handleFormSubmit} />
-        <ToastContainer autoClose={3000} />
 
         <ImagesInfo imageName={this.state.imageName} />
-
-        <Modal />
+        <ToastContainer autoClose={3000} />
       </>
     );
   }

@@ -2,10 +2,15 @@ import { ImSearch } from 'react-icons/im';
 import { Component } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import PropTypes from 'prop-types';
 
 class Searchbar extends Component {
   state = {
     imageName: '',
+  };
+
+  static propTypes = {
+    onSubmit: PropTypes.func.isRequired,
   };
 
   handleNameChange = event => {

@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import PropTypes from 'prop-types';
 import imagesAPI from '../services/images-api';
 import ImagesErrorView from '../ImagesErrorView';
 import ImagePendingView from '../ImagePendingView';
@@ -13,11 +14,19 @@ class ImagesInfo extends Component {
     page: 1,
   };
 
+  static propTypes = {
+    imageName: PropTypes.string.isRequired,
+  };
+
   componentDidUpdate(prevProps, prevState) {
     const prevName = prevProps.imageName;
     const nextName = this.props.imageName;
     const prevPage = prevState.page;
     const nextPage = this.state.page;
+
+    if (prevName !== nextName) {
+      this.setState({ page: 1 });
+    }
 
     if (prevName !== nextName || prevPage !== nextPage) {
       this.setState({ status: 'pending' });
@@ -46,7 +55,7 @@ class ImagesInfo extends Component {
     const { error, status } = this.state;
 
     if (status === 'idle') {
-      return <p>Введите имя</p>;
+      return <p>Please enter your search term</p>;
     }
 
     if (status === 'pending') {
