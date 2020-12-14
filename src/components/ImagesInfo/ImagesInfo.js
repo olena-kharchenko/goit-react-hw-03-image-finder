@@ -8,7 +8,7 @@ import Button from '../Button';
 
 class ImagesInfo extends Component {
   state = {
-    images: null,
+    images: [],
     error: null,
     status: 'idle',
     page: 1,
@@ -33,14 +33,17 @@ class ImagesInfo extends Component {
 
       imagesAPI
         .fetchImages(nextName, nextPage)
-        .then(images => {
-          if (images.total !== 0) {
-            this.setState({ images, status: 'resolved' });
+        .then(newImages => {
+          if (newImages.total !== 0) {
+            this.setState(prevState => ({
+              images: [...prevState.images, ...newImages.hits],
+              status: 'resolved',
+            }));
             return;
           }
+
           return Promise.reject(new Error('Invalid request'));
         })
-
         .catch(error => this.setState({ error, status: 'rejected' }));
     }
   }
@@ -69,7 +72,7 @@ class ImagesInfo extends Component {
     if (status === 'resolved') {
       return (
         <>
-          <ImageGallery images={this.state.images.hits} />
+          <ImageGallery images={this.state.images} />
           <Button onClick={this.onClickLoadMore} page={this.state.page} />
         </>
       );
